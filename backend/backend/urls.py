@@ -23,5 +23,6 @@ router.register(r'issues', views.IssueView, 'issue')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path(r'api/users^$', views.UserCreate.as_view(), name='account-create'),
 ]
