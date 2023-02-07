@@ -13,15 +13,9 @@ class NavigationBar extends Component {
                 <Navbar color="dark" dark="true">
                 <NavbarBrand href="/"> Pepper <FontAwesomeIcon icon={faPepperHot}/></NavbarBrand>
                 <Nav>
-                    <NavItem>
-                        <Button href="/issues" color="info">Issues</Button>
-                    </NavItem>
-                    <NavItem>
-                        <Button href="/login" color="warning">Login</Button>
-                    </NavItem>
-                    <NavItem>
-                        <Button href="/register" color="success">Register</Button>
-                    </NavItem>
+                    <NavItem><Button href="/issues" color="info">Issues</Button></NavItem>
+                    <NavItem><Button href="/login" color="warning">Login</Button></NavItem>
+                    <NavItem><Button href="/register" color="success">Register</Button></NavItem>
                 </Nav>
             </Navbar>
             </div>
