@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import '../style/login.css'
 
 class Login extends Component {
     render() {
@@ -7,7 +8,7 @@ class Login extends Component {
           <main className="container">
             <div className="row">
               <div className="col-md-6 col-sm-10 mx-auto p-0">
-                <div className="card p-3">
+                <div className="Login">
                     <Form>
                         <FormGroup>
                             <Label for="username-entry">Username</Label>

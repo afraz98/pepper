@@ -1,13 +1,31 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 
+import '../style/register.css';
+
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          modal: false,
+          activeItem: {
+            title: "",
+            description: "",
+            completed: false,
+            assignee: "",
+            priority: "",
+            reporter: "",
+            date: "",
+          }
+        };
+    }
+
     render() {
         return (
           <main className="container">
             <div className="row">
               <div className="col-md-6 col-sm-10 mx-auto p-0">
-                <div className="card p-3">
+                <div className="Register">
                     <Form>
                         <FormGroup>
                             <Label for="username-entry">Username</Label>
@@ -15,7 +33,7 @@ class Login extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <Label for="email-entry">Password</Label>
+                            <Label for="email-entry">Email</Label>
                             <Input type="text" id="email-entry" name="email" placeholder="user@example.com" />
                         </FormGroup>
 
