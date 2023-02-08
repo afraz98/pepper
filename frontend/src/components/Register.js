@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, FormFeedback, Input, Label } from "reactstrap";
-
+import axios from "axios";
 import '../style/register.css';
 
 class Register extends Component {
@@ -24,6 +24,28 @@ class Register extends Component {
       this.setState({
         [name]: value,
       });
+    }
+
+    signUp(userData){
+      axios.post("http://localhost:8000/api/users/", userData).catch(error => {
+        if(error.response){
+          console.log(JSON.stringify(error.response.data));
+        } else if(error.message){
+          console.log(JSON.stringify(error.message))
+        } else {
+          console.log(JSON.stringify(error))
+        }
+      });
+    }
+
+    onRegisterClick = () => {
+      const userData = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      };
+
+      this.signUp(userData);
     }
 
     validateEmail(email) {
@@ -93,7 +115,7 @@ class Register extends Component {
                           />
                         </FormGroup>
 
-                        <Button color="success"> Register </Button>
+                        <Button color="success" onClick={this.onRegisterClick}> Register </Button>
                     </Form>
                 </div>
               </div>

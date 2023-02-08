@@ -23,3 +23,4 @@ class Issue(models.Model):
     reporter = models.TextField()
     date = models.TextField()
     pass
+

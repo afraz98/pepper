@@ -10,7 +10,7 @@ class NavigationBar extends Component {
     render() {    
         return (
             <div>
-                <Navbar color="dark" dark="true">
+                <Navbar color="dark">
                 <NavbarBrand href="/"> Pepper <FontAwesomeIcon icon={faPepperHot}/></NavbarBrand>
                 <Nav>
                     <NavItem><Button href="/issues" color="info">Issues</Button></NavItem>
