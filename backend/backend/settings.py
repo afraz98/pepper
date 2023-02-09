@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'djoser',
     'pepper',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -134,5 +136,10 @@ CORS_ORIGIN_WHITELIST = [
 REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
       'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
 }
+
+DJOSER = {
+    "USER_ID_FIELD": "username"
+}
+

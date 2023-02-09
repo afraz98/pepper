@@ -95,6 +95,12 @@ class IssuePage extends Component {
         <span className={`issue-title mr-2 ${this.state.viewCompleted ? "completed-issue" : ""}`} title={item.description}> 
           {item.title} 
         </span>
+        <span className="">
+          {item.reporter}
+        </span>
+        <span className="">
+          {item.assignee}
+        </span>
         <span>
           <button className="btn btn-secondary mr-2 btn-success" onClick={() => this.editItem(item)}> <FontAwesomeIcon icon={faPencil}/> </button>
           <button className="btn btn-danger" onClick={() => this.handleDelete(item)}> <FontAwesomeIcon icon={faDumpsterFire}/> </button>

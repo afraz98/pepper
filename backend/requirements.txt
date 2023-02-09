@@ -1,0 +1,6 @@
+django==4.1.6
+djangocorsheaders==3.13.0
+django-filter==22.1
+djangorestframework==3.14.0
+djoser==2.1.0
+markdown==3.4.1

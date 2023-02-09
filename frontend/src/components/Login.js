@@ -1,5 +1,9 @@
+// Login functionality adapted from https://saasitive.com/tutorial/react-token-based-authentication-django/
+
 import React, { Component } from "react";
 import { Button, Form, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import axios from "axios";
+import { setAxiosAuthToken, setToken, getCurrentUser, unsetCurrentUser } from "./LoginAction";
 import '../style/login.css'
 
 class Login extends Component {
@@ -8,11 +12,7 @@ class Login extends Component {
       this.state = {
         email: '',
         password: '',
-        validate: {
-          emailState: '',
-        },
       }
-
     }
 
     handleChange = (event) => {
@@ -25,17 +25,27 @@ class Login extends Component {
       });
     }
 
-    validateEmail(email) {
-      const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      const { validate } = this.state;
+    login = (userData, redirectTo) => dispatch => {
+      axios.post("http://localhost:8000/api/token/login/", userData).then(response => {
+          const { auth_token } = response.data;
+          console.log(auth_token)
+          setAxiosAuthToken(auth_token);
+          dispatch(setToken(auth_token));
+          dispatch(getCurrentUser(redirectTo));
+        })
+        .catch(error => {
+          dispatch(unsetCurrentUser());
+          console.log(error);
+        });
+    };
 
-      if (email_regex.test(email.target.value)) {
-        validate.emailState = 'has-success';
-      } else {
-        validate.emailState = 'has-danger';
+    onLoginClick = () => {
+      const userData = {
+        email: this.state.email, 
+        password: this.state.password
       }
-    
-      this.setState({ validate });
+      console.log("Attempting login")
+      this.login(userData, "/dashboard")
     }
 
     render() {
@@ -54,12 +64,9 @@ class Login extends Component {
                             id="email-entry" 
                             name="email" 
                             placeholder="user@example.com"
-                            valid = { this.state.validate.emailState === 'has-success' }
-                            invalid = { this.state.validate.emailState === 'has-danger' }
                             value = { email }
                             onChange = { 
                               (e) => {
-                                this.validateEmail(e);
                                 this.handleChange(e);
                               }
                             }
@@ -79,7 +86,7 @@ class Login extends Component {
                             onChange={(e) => this.handleChange(e)}
                             />
                         </FormGroup>
-                        <Button color="success"> Login </Button>
+                        <Button color="success" onClick={this.onLoginClick}> Login </Button>
                     </Form>
                 </div>
               </div>
