@@ -45,7 +45,7 @@ class Login extends Component {
       axios.post("http://localhost:8000/api/token/login/", userData).then(response => {
         const { auth_token } = response.data;
         console.log(auth_token)
-        // setAxiosAuthToken(auth_token)
+        this.setAxiosAuthToken(auth_token)
       })
       .catch(error => {
         console.log(error);
