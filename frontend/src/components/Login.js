@@ -1,16 +1,15 @@
 // Login functionality adapted from https://saasitive.com/tutorial/react-token-based-authentication-django/
 
 import React, { Component } from "react";
-import { Button, Form, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
-import { setAxiosAuthToken, setToken, getCurrentUser, unsetCurrentUser } from "./LoginAction";
 import '../style/login.css'
 
 class Login extends Component {
     constructor(props){
       super(props);
       this.state = {
-        email: '',
+        username: '',
         password: '',
       }
     }
@@ -25,31 +24,36 @@ class Login extends Component {
       });
     }
 
-    login = (userData, redirectTo) => dispatch => {
-      axios.post("http://localhost:8000/api/token/login/", userData).then(response => {
-          const { auth_token } = response.data;
-          console.log(auth_token)
-          setAxiosAuthToken(auth_token);
-          dispatch(setToken(auth_token));
-          dispatch(getCurrentUser(redirectTo));
-        })
-        .catch(error => {
-          dispatch(unsetCurrentUser());
-          console.log(error);
-        });
+
+    setAxiosAuthToken = (token) => {
+      if (typeof token !== "undefined" && token) {
+        // Apply for every request
+        axios.defaults.headers.common["Authorization"] = "Token " + token;
+      } else {
+        // Delete auth header
+        delete axios.defaults.headers.common["Authorization"];
+      }
     };
+
 
     onLoginClick = () => {
       const userData = {
-        email: this.state.email, 
+        username: this.state.username, 
         password: this.state.password
       }
-      console.log("Attempting login")
-      this.login(userData, "/dashboard")
+      
+      axios.post("http://localhost:8000/api/token/login/", userData).then(response => {
+        const { auth_token } = response.data;
+        console.log(auth_token)
+        // setAxiosAuthToken(auth_token)
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
 
     render() {
-      const { email, password } = this.state;
+      const { username, password } = this.state;
         return (
           <main className="container">
             <div className="row">
@@ -58,22 +62,16 @@ class Login extends Component {
                     <h1>Login</h1>
                     <Form>
                         <FormGroup>
-                            <Label for="email-entry">Email</Label>
+                        <Label for="username-entry">Username</Label>
                             <Input 
-                            type="email" 
-                            id="email-entry" 
-                            name="email" 
-                            placeholder="user@example.com"
-                            value = { email }
-                            onChange = { 
-                              (e) => {
-                                this.handleChange(e);
-                              }
-                            }
+                            type="text" 
+                            id="username-entry" 
+                            name="username" 
+                            placeholder="Username"
+                            value = { username } 
+                            onChange={(e) => this.handleChange(e)} 
                             />
 
-                          <FormFeedback> Invalid email. </FormFeedback>
-                          <FormFeedback valid> Looks good! </FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="password-entry">Password</Label>

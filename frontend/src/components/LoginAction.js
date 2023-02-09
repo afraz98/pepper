@@ -67,6 +67,21 @@ export const unsetCurrentUser = () => dispatch => {
   });
 };
 
+
+export const login = (userData, redirectTo) => dispatch => {
+    axios.post("http://localhost:8000/api/token/login/", userData).then(response => {
+        const { auth_token } = response.data;
+        console.log(auth_token)
+        setAxiosAuthToken(auth_token);
+        dispatch(setToken(auth_token));
+        dispatch(getCurrentUser(redirectTo));
+      })
+      .catch(error => {
+        dispatch(unsetCurrentUser());
+        console.log(error);
+      });
+  };
+
 export const logout = () => dispatch => {
   axios
     .post("localhost:8000/api/token/logout/")
