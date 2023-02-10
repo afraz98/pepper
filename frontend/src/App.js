@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { PrivateRoute } from './utils/PrivateRoute.js'
 
 import './App.css';
 import Home from './components/Home';
@@ -7,17 +8,24 @@ import IssuePage from './components/IssuePage';
 import Login from './components/Login';
 import NavigationBar from './components/Navbar';
 import Register from './components/Register';
+import { AuthProvider } from './context/AuthContext';
+
 
 function App() {
     return (
         <Router>
+            <AuthProvider>
             <NavigationBar />
             <Routes>
                 <Route exact path='/' element={<Home/>} />
-                <Route path='/issues' element={<IssuePage/>} />
+                <Route path='/issues' element={<PrivateRoute/>}>
+                    <Route path='/issues' element={<IssuePage/>}/>
+                </Route>
+                
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
             </Routes>
+            </AuthProvider>
         </Router>
     );
 }
