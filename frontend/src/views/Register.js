@@ -20,6 +20,7 @@ const Register = () => {
             <div className="col-md-6 col-sm-10 mx-auto p-0">
               <div className="Register">
                 <h1>Register</h1>
+                <hr />
                   <Form onSubmit={handleSubmit}>
                       <FormGroup>
                           <Label for="username-entry">Username</Label>
@@ -54,7 +55,7 @@ const Register = () => {
                           invalid = { password !== password2 }
                           onChange={e => setPassword2(e.target.value)}
                           />
-                        <FormFeedback> Passwords do not match </FormFeedback>
+                        <FormFeedback> Passwords do not match. </FormFeedback>
                       </FormGroup>
 
                       <Button color="success"> Register </Button>

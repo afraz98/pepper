@@ -1,98 +1,85 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faDumpsterFire } from "@fortawesome/free-solid-svg-icons"
 
 import Modal from "../components/Modal";
 import axios from "axios";
-
 import '../style/issuepage.css'
 
-class IssuePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewCompleted: false,
-      issueList: [],
-      modal: false,
-      activeItem: {
-        title: "",
-        description: "",
-        completed: false,
-        assignee: "",
-        priority: "",
-        reporter: "",
-        date: "",
-      }
-    };
-  }
+const IssuePage = () => {
+  const [viewCompleted, setViewCompleted]  = useState(false);
+  const [issueList, setIssueList] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [activeItem, setActiveItem] = useState({});
 
-  componentDidMount() {
-    this.refreshList();
-  }
+  // Update issue list every 5 seconds
+  useEffect(
+    () => {
+      refreshList()
+    }
+  )
 
-  refreshList = () => {
-    axios.get("http://localhost:8000/api/issues/").then((res) => this.setState({ issueList: res.data })).catch((err) => console.log(err));
+  const refreshList = () => {
+    axios.get("http://localhost:8000/api/issues/").then((res) => setIssueList(res.data)).catch((err) => console.log(err));
   };
 
-  toggle = () => {
-    this.setState({ modal: !this.state.modal });
+  const toggle = () => {
+    setModal(!modal)
   };
 
-  handleSubmit = (item) => {
-    this.toggle();
+  const handleSubmit = (item) => {
+    toggle();
     console.log(item)
 
     if (item.id) {
-      axios.put(`http://localhost:8000/api/issues/${item.id}/`, item).then((res) => this.refreshList());
+      axios.put(`http://localhost:8000/api/issues/${item.id}/`, item);
       return;
     }
-    axios.post("http://localhost:8000/api/issues/", item).then((res) => this.refreshList());
+    axios.post("http://localhost:8000/api/issues/", item);
   };
 
-  handleDelete = (item) => {
-    axios.delete(`http://localhost:8000/api/issues/${item.id}/`).then((res) => this.refreshList());
+  const handleDelete = (item) => {
+    axios.delete(`http://localhost:8000/api/issues/${item.id}/`);
   };
 
-  createItem = () => {
+  const createItem = () => {
     const item = { title: "", description: "", completed: false, assignee: "Unassigned", priority: "Low", reporter: "No Reporter", date: "2023-01-01" };
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    setActiveItem(item);
+    setModal(!modal)
   };
 
-  editItem = (item) => {
-    this.setState({ activeItem: item, modal: !this.state.modal });
+  const editItem = (item) => {
+    setModal(!modal)
+    setActiveItem(item);
   };
 
-  displayCompleted = (status) => {
+  const displayCompleted = (status) => {
     if (status) {
-      return this.setState({ viewCompleted: true });
+      setViewCompleted(true);
     }
 
-    return this.setState({ viewCompleted: false });
+    setViewCompleted(false);
   };
 
-  renderTabList = () => {
+  const renderTabList = () => {
     return (
       <div className="nav nav-tabs">
-        <span className={this.state.viewCompleted ? "nav-link active" : "nav-link"} onClick={() => this.displayCompleted(true)}> Complete </span>
-        <span className={this.state.viewCompleted ? "nav-link" : "nav-link active"} onClick={() => this.displayCompleted(false)}> Incomplete </span>
+        <span className={viewCompleted ? "nav-link active" : "nav-link"} onClick={() => displayCompleted(true)}> Complete </span>
+        <span className={viewCompleted ? "nav-link" : "nav-link active"} onClick={() => displayCompleted(false)}> Incomplete </span>
       </div>
     );
   };
 
-  renderItems = () => {
-    const { viewCompleted } = this.state;
-    const newItems = this.state.issueList.filter((item) => item.completed === viewCompleted);
+  const renderItems = () => {
+    const newItems = Object.values(issueList).filter((item) => item.completed === viewCompleted);
 
     return ( 
       newItems.map((item) => (
       <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
         <span className="">
-          {item.id}
-        </span>
-        <span className="">
           {item.date}
         </span>
-        <span className={`issue-title mr-2 ${this.state.viewCompleted ? "completed-issue" : ""}`} title={item.description}> 
+        <span className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> 
           {item.title} 
         </span>
         <span className="">
@@ -102,36 +89,31 @@ class IssuePage extends Component {
           {item.assignee}
         </span>
         <span>
-          <button className="btn btn-secondary mr-2 btn-success" onClick={() => this.editItem(item)}> <FontAwesomeIcon icon={faPencil}/> </button>
-          <button className="btn btn-danger" onClick={() => this.handleDelete(item)}> <FontAwesomeIcon icon={faDumpsterFire}/> </button>
+          <button className="btn btn-secondary mr-2 btn-success" onClick={() => editItem(item)}> <FontAwesomeIcon icon={faPencil}/> </button>
+          <button className="btn btn-danger" onClick={() => handleDelete(item)}> <FontAwesomeIcon icon={faDumpsterFire}/> </button>
         </span>
       </li>
     )));
   };
 
-  render() {
-    return (
-      <main className="container">
-        <div className="row">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="IssuePage">
-              <div className="p-3">
-                <button className="btn btn-primary" onClick={this.createItem}> Create Issue </button></div>
-                {
-                  this.renderTabList()
-                }
-                <ul className="list-group list-group-flush border-top-0">
-                {
-                  this.renderItems()
-                }
-                </ul>
-            </div>
+  return (
+    <main className="container">
+      <div className="row">
+        <div className="col-md-6 col-sm-10 mx-auto p-0">
+          <div className="IssuePage">
+            <div className="p-3">
+              <button className="btn btn-primary" onClick={createItem}> Create Issue </button></div>
+              { renderTabList() }
+              <ul className="list-group list-group-flush border-top-0">
+              { renderItems() }
+              </ul>
           </div>
         </div>
-        { this.state.modal ? ( <Modal activeItem={this.state.activeItem} toggle={this.toggle} onSave={this.handleSubmit}/> ) : null}
-      </main>
-    );
-  }
-}
+      </div>
+      { modal ? ( <Modal activeItem={activeItem} toggle={toggle} onSave={handleSubmit}/> ) : null}
+    </main>
+  );
+  
+};
 
 export default IssuePage;
