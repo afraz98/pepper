@@ -26,7 +26,7 @@ const Login = () => {
                   <hr />
                   <FormGroup>
                   <Label for="username">Username</Label>
-                  <Input type="text" id="username" placeholder="user@example.com" />
+                  <Input type="text" id="username" placeholder="user.name" />
                   </FormGroup>
 
                   <FormGroup>

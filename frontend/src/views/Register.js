@@ -27,7 +27,7 @@ const Register = () => {
                           type="text" 
                           id="username-entry" 
                           name="username" 
-                          placeholder="Username"
+                          placeholder="user.name"
                           onChange={e => setUsername(e.target.value)}
                           />
                       </FormGroup>
