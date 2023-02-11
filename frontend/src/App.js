@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { PrivateRoute } from './utils/PrivateRoute.js'
 
 import './App.css';
-import Home from './components/Home';
-import IssuePage from './components/IssuePage';
-import Login from './components/Login';
+import Home from './views/Home';
+import IssuePage from './views/IssuePage';
+import Login from './views/Login';
 import NavigationBar from './components/Navbar';
-import Register from './components/Register';
+import Register from './views/Register';
 import { AuthProvider } from './context/AuthContext';
 
 

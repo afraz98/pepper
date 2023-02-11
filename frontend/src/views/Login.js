@@ -1,7 +1,7 @@
 // Login functionality adapted from https://saasitive.com/tutorial/react-token-based-authentication-django/
 
 import React, { useContext } from "react";
-import { Button, Form, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import AuthContext from '../context/AuthContext';
 import '../style/login.css';
 
@@ -24,10 +24,15 @@ const Login = () => {
                 <Form onSubmit={handleSubmit}>
                   <h1>Login </h1>
                   <hr />
+                  <FormGroup>
                   <Label for="username">Username</Label>
                   <Input type="text" id="username" placeholder="user@example.com" />
+                  </FormGroup>
+
+                  <FormGroup>
                   <Label for="password">Password</Label>
-                  <Input type="password" id="password" placeholder="Enter Password" />
+                  <Input type="password" id="password" placeholder="********" />
+                  </FormGroup>
                   <Button type="submit">Login</Button>
                 </Form>
               </section>

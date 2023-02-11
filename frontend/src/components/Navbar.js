@@ -10,12 +10,11 @@ const NavigationBar = () => {
     const { user, logoutUser } = useContext(AuthContext);
     return (
         <div>
-            <Navbar color="dark">
+            <Navbar color="dark" dark="true">
             <NavbarBrand href="/"> Pepper <FontAwesomeIcon icon={faPepperHot}/></NavbarBrand>
             <Nav>
             { user ? (
                 <>
-                
                 <NavItem><Button href="/issues" color="info">Issues</Button></NavItem>
                 <NavItem><Button onClick={ logoutUser } color="warning">Logout</Button></NavItem>
                 </>
