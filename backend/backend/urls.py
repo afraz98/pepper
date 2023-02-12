@@ -6,7 +6,7 @@ from pepper import views
 
 router = routers.DefaultRouter()
 router.register(r'issues', views.IssueView, 'issue')
-
+router.register(r'users', views.UserView, 'user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

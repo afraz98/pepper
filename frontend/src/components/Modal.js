@@ -19,13 +19,13 @@ const CustomModal = (props) => {
   };
   
   return (
-    <Modal isOpen={true} toggle={props.toggle}>
-      <ModalHeader toggle={props.toggle}>Create an issue</ModalHeader>
+    <Modal isOpen={true} toggle={props.toggle} dark>
+      <ModalHeader toggle={props.toggle} className="text-black">Create an issue</ModalHeader>
       <ModalBody>
         <Form>
           
           <FormGroup>
-            <Label for="issue-title">Title</Label>
+            <Label for="issue-title" className="text-black">Title</Label>
             <Input
               type="text"
               id="issue-title"
@@ -37,7 +37,7 @@ const CustomModal = (props) => {
           </FormGroup>
           
           <FormGroup>
-            <Label for="issue-description">Description</Label>
+            <Label for="issue-description" className="text-black">Description</Label>
             <Input
               type="text"
               id="issue-description"
@@ -49,7 +49,7 @@ const CustomModal = (props) => {
           </FormGroup>
 
           <FormGroup>
-          <Label for="priority-selection">Description</Label>
+          <Label for="priority-selection" className="text-black">Priority</Label>
             <Input id="priority-selection" type="select">
               <option> Critical </option>
               <option> Severe </option>
@@ -59,6 +59,10 @@ const CustomModal = (props) => {
               value={ activeItem.priority }
               onChange={ e => handleChange(e) }
             </Input>
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="assignee-selection"></Label>
           </FormGroup>
 
         </Form>

@@ -5,8 +5,8 @@ Issue tracking platform with built-in analytics on user-defined issue types.
 # Running Django
 
 ```
-pipenv shell
 cd backend/
+pipenv shell
 python manage.py runserver
 ```
 
@@ -14,5 +14,6 @@ python manage.py runserver
 
 ```
 cd frontend/
+npm install
 npm start
 ```

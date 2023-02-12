@@ -103,8 +103,8 @@ const IssuePage = () => {
       <div className="row">
         <div className="col-md-6 col-sm-10 mx-auto p-0">
         
-          <div className="IssuePage">
-          <p> Hello, {user.username}!</p>
+          <div className="issue-page">
+          <p> Hello, <b>{user.username}</b>!</p>
             <div className="p-3">
               <button className="btn btn-primary" onClick={createItem}> Create Issue </button></div>
               { renderTabList() }

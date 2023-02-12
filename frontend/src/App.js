@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { PrivateRoute } from './utils/PrivateRoute.js'
 
-import './App.css';
 import Home from './views/Home';
 import IssuePage from './views/IssuePage';
 import Login from './views/Login';

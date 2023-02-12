@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Button, Form, FormGroup, FormFeedback, Input, Label } from "reactstrap";
 import AuthContext from "../context/AuthContext";
-import '../style/register.css';
+import '../style/register.css'
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -18,7 +18,7 @@ const Register = () => {
         <main className="container">
           <div className="row">
             <div className="col-md-6 col-sm-10 mx-auto p-0">
-              <div className="Register">
+              <div className="register">
                 <h1>Register</h1>
                 <hr />
                   <Form onSubmit={handleSubmit}>

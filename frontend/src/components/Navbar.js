@@ -10,7 +10,7 @@ const NavigationBar = () => {
     const { user, logoutUser } = useContext(AuthContext);
     return (
         <div>
-            <Navbar color="dark" dark="true">
+            <Navbar color="dark" dark>
             <NavbarBrand href="/"> Pepper <FontAwesomeIcon icon={faPepperHot}/></NavbarBrand>
             <Nav>
             { user ? (

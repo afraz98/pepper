@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import AuthContext from '../context/AuthContext';
-import '../style/login.css';
+import "../style/login.css"
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
@@ -19,7 +19,7 @@ const Login = () => {
     <main className="container">
       <div className="row">
         <div className="col-md-6 col-sm-10 mx-auto p-0">
-          <div className="Login">
+          <div className="login">
               <section>
                 <Form onSubmit={handleSubmit}>
                   <h1>Login </h1>
