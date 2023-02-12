@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
+import AuthContext from "../context/AuthContext";
 
 const CustomModal = (props) => {
+  const { user } = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState(props.activeItem)
 
+  activeItem.reporter = user.username
   const handleChange = (e) => {
     let { name, value } = e.target;
 

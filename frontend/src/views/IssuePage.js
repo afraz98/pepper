@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faDumpsterFire } from "@fortawesome/free-solid-svg-icons"
 
 import Modal from "../components/Modal";
 import axios from "axios";
+import AuthContext from "../context/AuthContext";
 import '../style/issuepage.css'
 
 const IssuePage = () => {
+  const { user } = useContext(AuthContext);
   const [viewCompleted, setViewCompleted]  = useState(false);
   const [issueList, setIssueList] = useState(false);
   const [modal, setModal] = useState(false);
@@ -100,7 +102,9 @@ const IssuePage = () => {
     <main className="container">
       <div className="row">
         <div className="col-md-6 col-sm-10 mx-auto p-0">
+        
           <div className="IssuePage">
+          <p> Hello, {user.username}!</p>
             <div className="p-3">
               <button className="btn btn-primary" onClick={createItem}> Create Issue </button></div>
               { renderTabList() }
