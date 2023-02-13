@@ -5,8 +5,10 @@ import AuthContext from "../context/AuthContext";
 const CustomModal = (props) => {
   const { user } = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState(props.activeItem)
+  const { userList } = props.userList
 
   activeItem.reporter = user.username
+  
   const handleChange = (e) => {
     let { name, value } = e.target;
 
@@ -17,6 +19,13 @@ const CustomModal = (props) => {
     const newItem = { ...activeItem, [name]: value };
     setActiveItem(newItem);
   };
+
+  const renderAssignees = () => {
+    return (
+      props.userList.map((item) =>
+        <option>{item.username}</option>
+      ));   
+  }
   
   return (
     <Modal isOpen={true} toggle={props.toggle} dark>
@@ -62,7 +71,14 @@ const CustomModal = (props) => {
           </FormGroup>
 
           <FormGroup>
-            <Label for="assignee-selection"></Label>
+            <Label for="assignee-selection" className="text-black"> Assignee </Label>
+            <Input id="assignee-selection" type="select">
+              value={ activeItem.assignee }
+              {
+                renderAssignees()
+              }
+              onChange = { e => handleChange(e) }
+            </Input>
           </FormGroup>
 
         </Form>

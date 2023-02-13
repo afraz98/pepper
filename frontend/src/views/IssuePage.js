@@ -10,19 +10,21 @@ import '../style/issuepage.css'
 const IssuePage = () => {
   const { user } = useContext(AuthContext);
   const [viewCompleted, setViewCompleted]  = useState(false);
-  const [issueList, setIssueList] = useState(false);
+  const [userList, setUserList] = useState([]);
+  const [issueList, setIssueList] = useState([]);
   const [modal, setModal] = useState(false);
   const [activeItem, setActiveItem] = useState({});
 
-  // Update issue list every 5 seconds
+  // Update issue list
   useEffect(
     () => {
-      refreshList()
+      setTimeout(refreshList, 5000)
     }
   )
 
   const refreshList = () => {
     axios.get("http://localhost:8000/api/issues/").then((res) => setIssueList(res.data)).catch((err) => console.log(err));
+    axios.get("http://localhost:8000/api/users/").then((res) => setUserList(res.data)).catch((err) => console.log(err));
   };
 
   const toggle = () => {
@@ -114,7 +116,7 @@ const IssuePage = () => {
           </div>
         </div>
       </div>
-      { modal ? ( <Modal activeItem={activeItem} toggle={toggle} onSave={handleSubmit}/> ) : null}
+      { modal ? ( <Modal activeItem={activeItem} toggle={toggle} onSave={handleSubmit} userList={userList}/> ) : null}
     </main>
   );
   

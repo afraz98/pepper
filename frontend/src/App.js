@@ -8,6 +8,7 @@ import Login from './views/Login';
 import NavigationBar from './components/Navbar';
 import Register from './views/Register';
 import { AuthProvider } from './context/AuthContext';
+import Footer from './components/Footer.js';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
             </Routes>
+            <Footer />
             </AuthProvider>
         </Router>
     );
