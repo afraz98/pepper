@@ -1,19 +1,15 @@
-import { Container } from "reactstrap";
 import '../style/home.css'
-
 
 const Home = () => {
     return (
-        <div className="homepage">
-            <Container>
+        <main className="homepage">
                 <div className="row justify-context-center">
-                    <div className="col-md-9">
+                    <div className="">
                         <h1 className="display-4 font-weight-bold text-uppercase flair text-center">Pepper</h1>
                         <p className="lead text-center"> Next generation issue-tracking platform. </p>
                     </div>
                 </div>
-            </Container>
-        </div>
+        </main>
     );
 }
 

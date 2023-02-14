@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 import AuthContext from "../context/AuthContext";
+import Form from "react-bootstrap/Form";
+
+import "../style/modal.css"
 
 const CustomModal = (props) => {
   const { user } = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState(props.activeItem)
-  const { userList } = props.userList
-
+  const [show, setShow] = useState(true);
   activeItem.reporter = user.username
   
   const handleChange = (e) => {
@@ -20,76 +23,55 @@ const CustomModal = (props) => {
     setActiveItem(newItem);
   };
 
+  const handleClose = () => setShow(false);
+
   const renderAssignees = () => {
     return (
       props.userList.map((item) =>
-        <option>{item.username}</option>
+        <option>{ item.username }</option>
       ));   
   }
   
   return (
-    <Modal isOpen={true} toggle={props.toggle} dark>
-      <ModalHeader toggle={props.toggle} className="text-black">Create an issue</ModalHeader>
-      <ModalBody>
-        <Form>
-          
-          <FormGroup>
-            <Label for="issue-title" className="text-black">Title</Label>
-            <Input
-              type="text"
-              id="issue-title"
-              name="title"
-              value={activeItem.title}
-              onChange={ e => handleChange(e) }
-              placeholder="Issue Title"
-            />
-          </FormGroup>
-          
-          <FormGroup>
-            <Label for="issue-description" className="text-black">Description</Label>
-            <Input
-              type="text"
-              id="issue-description"
-              name="description"
-              value={activeItem.description}
-              onChange={ e => handleChange(e) }
-              placeholder="Issue description"
-            />
-          </FormGroup>
+    <>
+        <Modal className="text-black" show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title> Create an Issue</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <>
+            <Form.Group>
+              <Form.Label> Issue Title </Form.Label>
+              <Form.Control 
+              placeholder="Take over the world"
+              value = { activeItem.title }
+              />
+            </Form.Group>
 
-          <FormGroup>
-          <Label for="priority-selection" className="text-black">Priority</Label>
-            <Input id="priority-selection" type="select">
-              <option> Critical </option>
-              <option> Severe </option>
-              <option> High </option>
-              <option> Medium </option>
-              <option> Low </option>
-              value={ activeItem.priority }
-              onChange={ e => handleChange(e) }
-            </Input>
-          </FormGroup>
+            <Form.Group>
+              <Form.Label> Issue Description </Form.Label>
+              <Form.Control 
+              placeholder="Cause inflation to reach 5000%!"
+              value = { activeItem.description }
+              />
+            </Form.Group>
 
-          <FormGroup>
-            <Label for="assignee-selection" className="text-black"> Assignee </Label>
-            <Input id="assignee-selection" type="select">
-              value={ activeItem.assignee }
-              {
-                renderAssignees()
-              }
-              onChange = { e => handleChange(e) }
-            </Input>
-          </FormGroup>
-
-        </Form>
-      </ModalBody>
-      
-      <ModalFooter>
-        <Button color="success" onClick={() => props.onSave(activeItem)}> Save </Button>
-      </ModalFooter>
-    </Modal>
+            <Form.Group>
+              <Form.Label>Assignee</Form.Label>
+              <Form.Select>
+                {
+                  renderAssignees()
+                }
+              </Form.Select>
+            </Form.Group>
+            </>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={() => props.onSave(activeItem)}> Save </Button>
+          </Modal.Footer>
+        </Modal>
+    </>
   );
-  
 };
 
-export default CustomModal
+export default CustomModal;

@@ -1,7 +1,9 @@
 import { useState, useContext } from "react";
-import { Button, Form, FormGroup, FormFeedback, Input, Label } from "reactstrap";
 import AuthContext from "../context/AuthContext";
-import '../style/register.css'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+import '../style/register.css';
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -22,32 +24,32 @@ const Register = () => {
                 <h1>Register</h1>
                 <hr />
                   <Form onSubmit={handleSubmit}>
-                      <FormGroup>
-                          <Label for="username-entry">Username</Label>
-                          <Input 
+                      <Form.Group>
+                          <Form.Label>Username</Form.Label>
+                          <Form.Control 
                           type="text" 
                           id="username-entry" 
                           name="username" 
                           placeholder="user.name"
                           onChange={e => setUsername(e.target.value)}
                           />
-                      </FormGroup>
+                      </Form.Group>
 
-                      <FormGroup>
-                          <Label for="password-entry">Password</Label>
-                          <Input 
+                      <Form.Group>
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control 
                           type="password" 
                           id="password-entry"
                           name="password"
                           placeholder="******" 
                           onChange={e => setPassword(e.target.value)}
                         />
-                      </FormGroup>
+                      </Form.Group>
 
 
-                      <FormGroup>
-                          <Label for="repeat-password-entry">Repeat Password</Label>
-                          <Input 
+                      <Form.Group>
+                          <Form.Label>Repeat Password</Form.Label>
+                          <Form.Control 
                           type="password" 
                           id="repeat-password-entry"
                           name="repeat-password"
@@ -55,9 +57,8 @@ const Register = () => {
                           invalid = { password !== password2 }
                           onChange={e => setPassword2(e.target.value)}
                           />
-                        <FormFeedback> Passwords do not match. </FormFeedback>
-                      </FormGroup>
-
+                      </Form.Group>
+                      <hr/>
                       <Button color="success"> Register </Button>
                   </Form>
               </div>
@@ -68,4 +69,4 @@ const Register = () => {
 }
 
 
-export default Register
+export default Register;
