@@ -37,7 +37,7 @@ const Login = () => {
                   </Form.Group>
                   
                   <hr/>
-                  <Button type="submit">Login</Button>
+                  <Button variant="danger" type="submit">Login</Button>
                 </Form>
               </section>
           </div>

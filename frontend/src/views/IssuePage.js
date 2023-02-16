@@ -18,8 +18,8 @@ const IssuePage = () => {
   // Update issue list
   useEffect(
     () => {
-      setTimeout(refreshList, 5000)
-    }
+      refreshList()
+    }, []
   )
 
   const refreshList = () => {
@@ -49,12 +49,13 @@ const IssuePage = () => {
   const createItem = () => {
     const item = { title: "", description: "", completed: false, assignee: "Unassigned", priority: "Low", reporter: "No Reporter", date: "2023-01-01" };
     setActiveItem(item);
-    setModal(!modal)
+    toggle();
   };
 
   const editItem = (item) => {
-    setModal(!modal)
+    console.log(item)
     setActiveItem(item);
+    toggle();
   };
 
   const displayCompleted = (status) => {
@@ -68,8 +69,8 @@ const IssuePage = () => {
   const renderTabList = () => {
     return (
       <div className="nav nav-tabs">
-        <span className={viewCompleted ? "nav-link active" : "nav-link"} onClick={() => displayCompleted(true)}> Complete </span>
-        <span className={viewCompleted ? "nav-link" : "nav-link active"} onClick={() => displayCompleted(false)}> Incomplete </span>
+        <span className={viewCompleted ? "nav-link active text-black" : "nav-link text-white"} onClick={() => displayCompleted(true)}> Complete </span>
+        <span className={viewCompleted ? "nav-link text-white" : "nav-link active text-black"} onClick={() => displayCompleted(false)}> Incomplete </span>
       </div>
     );
   };
@@ -108,7 +109,7 @@ const IssuePage = () => {
           <div className="issue-page">
           <p> Hello, <b>{user.username}</b>!</p>
             <div className="p-3">
-              <button className="btn btn-primary" onClick={createItem}> Create Issue </button></div>
+              <button className="btn btn-danger" onClick={createItem}> Create Issue </button></div>
               { renderTabList() }
               <ul className="list-group list-group-flush border-top-0">
               { renderItems() }

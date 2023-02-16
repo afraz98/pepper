@@ -59,7 +59,7 @@ const Register = () => {
                           />
                       </Form.Group>
                       <hr/>
-                      <Button color="success"> Register </Button>
+                      <Button variant="danger" type="submit"> Register </Button>
                   </Form>
               </div>
             </div>
