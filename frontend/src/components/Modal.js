@@ -9,7 +9,7 @@ import "../style/modal.css"
 const CustomModal = (props) => {
   const { user } = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState(props.activeItem)
-  const [show, setShow] = useState(true);
+  const show = true;
   const date = new Date();
   
   const handleChange = (e) => {
@@ -49,10 +49,10 @@ const CustomModal = (props) => {
             <Form.Group>
               <Form.Label> Issue Title </Form.Label>
               <Form.Control 
-              placeholder="Take over the world"
-              name="title"
-              value = { activeItem.title }
-              onChange = { e => handleChange(e) }
+                placeholder="Take over the world"
+                name="title"
+                value = { activeItem.title }
+                onChange = { e => handleChange(e) }
               />
             </Form.Group>
 

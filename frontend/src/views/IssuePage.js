@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faDumpsterFire } from "@fortawesome/free-solid-svg-icons"
-
-import Modal from "../components/Modal";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Table from "react-bootstrap/Table";
+
 import '../style/issuepage.css'
 
 const IssuePage = () => {
   const { user } = useContext(AuthContext);
   const [viewCompleted, setViewCompleted]  = useState(false);
-  const [userList, setUserList] = useState([]);
   const [issueList, setIssueList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [activeItem, setActiveItem] = useState({});
+  let navigate = useNavigate();
 
   // Update issue list
   useEffect(
@@ -22,40 +21,17 @@ const IssuePage = () => {
     }, []
   )
 
+  const routeChange = () => {
+    let path = '/create'
+    navigate(path)
+  }
+
   const refreshList = () => {
     axios.get("http://localhost:8000/api/issues/").then((res) => setIssueList(res.data)).catch((err) => console.log(err));
-    axios.get("http://localhost:8000/api/users/").then((res) => setUserList(res.data)).catch((err) => console.log(err));
-  };
-
-  const toggle = () => {
-    setModal(!modal)
-  };
-
-  const handleSubmit = (item) => {
-    toggle();
-    console.log(item)
-
-    if (item.id) {
-      axios.put(`http://localhost:8000/api/issues/${item.id}/`, item);
-      return;
-    }
-    axios.post("http://localhost:8000/api/issues/", item);
   };
 
   const handleDelete = (item) => {
     axios.delete(`http://localhost:8000/api/issues/${item.id}/`);
-  };
-
-  const createItem = () => {
-    const item = { title: "", description: "", completed: false, assignee: "Unassigned", priority: "Low", reporter: "No Reporter", date: "2023-01-01" };
-    setActiveItem(item);
-    toggle();
-  };
-
-  const editItem = (item) => {
-    console.log(item)
-    setActiveItem(item);
-    toggle();
   };
 
   const displayCompleted = (status) => {
@@ -79,26 +55,36 @@ const IssuePage = () => {
     const newItems = Object.values(issueList).filter((item) => item.completed === viewCompleted);
 
     return ( 
-      newItems.map((item) => (
-      <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-        <span className="">
-          {item.date}
-        </span>
-        <span className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> 
-          {item.title} 
-        </span>
-        <span className="">
-          {item.reporter}
-        </span>
-        <span className="">
-          {item.assignee}
-        </span>
-        <span>
-          <button className="btn btn-secondary mr-2 btn-success" onClick={() => editItem(item)}> <FontAwesomeIcon icon={faPencil}/> </button>
-          <button className="btn btn-danger" onClick={() => handleDelete(item)}> <FontAwesomeIcon icon={faDumpsterFire}/> </button>
-        </span>
-      </li>
-    )));
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th> Date </th>
+            <th> Title </th>
+            <th> Assignee </th>
+            <th> Reporter </th>
+            <th> Options </th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            newItems.map (
+              (item) => (
+                <tr>
+                  <th> {item.date} </th>
+                  <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> {item.title} </th>
+                  <th> {item.reporter} </th>
+                  <th> {item.assignee} </th>
+                  <th>
+                    <button className="btn btn-secondary mr-2 btn-success"> <FontAwesomeIcon icon={faPencil}/> </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(item)}> <FontAwesomeIcon icon={faDumpsterFire}/> </button>
+                  </th>
+                </tr>
+              )
+            )
+          }
+        </tbody>
+      </Table>
+    );
   };
 
   return (
@@ -109,15 +95,19 @@ const IssuePage = () => {
           <div className="issue-page">
           <p> Hello, <b>{user.username}</b>!</p>
             <div className="p-3">
-              <button className="btn btn-danger" onClick={createItem}> Create Issue </button></div>
-              { renderTabList() }
+              <button className="btn btn-danger" onClick={routeChange}> Create Issue </button></div>
+              { 
+                renderTabList() 
+              }
+              
               <ul className="list-group list-group-flush border-top-0">
-              { renderItems() }
+              { 
+                renderItems() 
+              }
               </ul>
           </div>
         </div>
       </div>
-      { modal ? ( <Modal activeItem={activeItem} toggle={toggle} onSave={handleSubmit} userList={userList}/> ) : null}
     </main>
   );
   

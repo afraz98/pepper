@@ -4,6 +4,7 @@ import { PrivateRoute } from './utils/PrivateRoute.js'
 
 import Home from './views/Home';
 import IssuePage from './views/IssuePage';
+import CreateIssue from './views/CreateIssue.js';
 import Login from './views/Login';
 import NavigationBar from './components/Navbar';
 import Register from './views/Register';
@@ -24,6 +25,10 @@ function App() {
                 
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
+
+                <Route path='/create' element={<PrivateRoute/>}>
+                    <Route path='/create' element={<CreateIssue/>}/>
+                </Route>
             </Routes>
             <Footer />
             </AuthProvider>
