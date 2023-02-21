@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { PrivateRoute } from './utils/PrivateRoute.js'
 
 import Home from './views/Home';
-import IssuePage from './views/IssuePage';
+import IssuePage from './views/IssuePage.js';
+import IssuesPage from './views/IssuesPage';
 import CreateIssue from './views/CreateIssue.js';
 import Login from './views/Login';
 import NavigationBar from './components/Navbar';
@@ -20,14 +21,15 @@ function App() {
             <Routes>
                 <Route exact path='/' element={<Home/>} />
                 <Route path='/issues' element={<PrivateRoute/>}>
-                    <Route path='/issues' element={<IssuePage/>}/>
+                    <Route path='/issues' element={<IssuesPage/>}/>
+                    <Route path='/issues/:issueId' element={<IssuePage/>}/>
                 </Route>
                 
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
 
-                <Route path='/create' element={<PrivateRoute/>}>
-                    <Route path='/create' element={<CreateIssue/>}/>
+                <Route path='/issues/create' element={<PrivateRoute/>}>
+                    <Route path='/issues/create' element={<CreateIssue/>}/>
                 </Route>
             </Routes>
             <Footer />

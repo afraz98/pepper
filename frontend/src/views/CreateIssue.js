@@ -6,6 +6,7 @@ import AuthContext from "../context/AuthContext";
 import '../style/issuepage.css'
 import { useNavigate } from "react-router-dom";
 
+import '../style/createissue.css'
 
 const CreateIssue = () => {
     const { user } = useContext(AuthContext);
@@ -91,6 +92,18 @@ const CreateIssue = () => {
                                     {
                                         renderAssignees()
                                     }
+                                </Form.Select>
+                                </Form.Group>
+
+
+                                <Form.Group>
+                                <Form.Label>Priority</Form.Label>
+                                <Form.Select name="priority" value = { item.priority } onChange = { e => handleChange(e) }>                
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                    <option>Critical</option>
+                                    <option>Severe</option>
                                 </Form.Select>
                                 </Form.Group>
                                 
