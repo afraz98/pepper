@@ -55,7 +55,7 @@ const CreateIssue = () => {
     const renderAssignees = () => {
         return (
           userList.map((usr) =>
-            <option>{ usr.username }</option>
+            <option key={usr.id}>{ usr.username }</option>
           ));   
       }
 

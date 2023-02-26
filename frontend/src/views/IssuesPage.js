@@ -62,7 +62,7 @@ const IssuesPage = () => {
           {
             newItems.map (
               (item) => (
-                <tr>
+                <tr key={item.id}>
                   <th> {item.date} </th>
                   <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <a href={`/issues/${item.id}`}>{item.title}</a> </th>
                   <th> {item.reporter} </th>
