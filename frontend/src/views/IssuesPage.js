@@ -64,7 +64,7 @@ const IssuesPage = () => {
               (item) => (
                 <tr key={item.id}>
                   <th> {item.date} </th>
-                  <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <a href={`/issues/${item.id}`}>{item.title}</a> </th>
+                  <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <a className="text-white" href={`/issues/${item.id}`}>{item.title}</a> </th>
                   <th> {item.reporter} </th>
                   <th> {item.assignee} </th>
                 </tr>

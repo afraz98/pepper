@@ -72,6 +72,7 @@ const CreateIssue = () => {
                                     placeholder="Take over the world"
                                     name="title"
                                     value = { item.title }
+                                    className="bg-dark text-white"
                                     onChange = { e => handleChange(e) }
                                 />
                                 </Form.Group>
@@ -82,13 +83,15 @@ const CreateIssue = () => {
                                     placeholder="Cause inflation to reach 5000%!"
                                     name="description"
                                     value = { item.description }
+                                    as="textarea" rows={5}
+                                    className="bg-dark text-white"
                                     onChange = { e => handleChange(e) }
                                 />
                                 </Form.Group>
 
                                 <Form.Group>
                                 <Form.Label>Assignee</Form.Label>
-                                <Form.Select name="assignee" value = { item.assignee } onChange = { e => handleChange(e) }>                
+                                <Form.Select className="bg-dark text-white" name="assignee" value = { item.assignee } onChange = { e => handleChange(e) }>                
                                     {
                                         renderAssignees()
                                     }
@@ -98,7 +101,7 @@ const CreateIssue = () => {
 
                                 <Form.Group>
                                 <Form.Label>Priority</Form.Label>
-                                <Form.Select name="priority" value = { item.priority } onChange = { e => handleChange(e) }>                
+                                <Form.Select className="bg-dark text-white" name="priority" value = { item.priority } onChange = { e => handleChange(e) }>                
                                     <option>Low</option>
                                     <option>Medium</option>
                                     <option>High</option>

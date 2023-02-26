@@ -3,6 +3,7 @@ import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button"
 
 const IssuePage = () => {
     const { issueId } = useParams();
@@ -19,10 +20,16 @@ const IssuePage = () => {
         date: ""
     });
 
+
+
     const refreshIssue = () => {
         console.log(`http://localhost:8000/api/issues/${issueId}/`)
         axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => setItem(res.data));
     };
+
+    const closeIssue = () => {
+        // TODO: Change item.completed to true, navigate back to /issues
+    }
 
     return (
         <main className="container">
@@ -31,26 +38,27 @@ const IssuePage = () => {
                 <div className="issue-page">
                     <div className="p-3">
                         <h3>Issue #{issueId}</h3>
-                        <Form variant="dark">
+                        <hr/>
+                        <Form>
                         <Form.Group>
                             <Form.Label>Title</Form.Label>
-                            <Form.Control value={item.title} disabled />
+                            <Form.Control className="bg-dark text-white" value={item.title} disabled />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Description</Form.Label>
-                            <Form.Control value={item.description} disabled />
+                            <Form.Control className="bg-dark text-white" value={item.description} as="textarea" rows={5} disabled />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Assignee</Form.Label>
-                            <Form.Select name="assignee" disabled>
+                            <Form.Select className="bg-dark text-white" name="assignee" disabled>
                                 <option>{user.username}</option>
                             </Form.Select>
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Priority</Form.Label>
-                            <Form.Select name="priority" value={item.priority} disabled>                
+                            <Form.Select className="bg-dark text-white" name="priority" value={item.priority} disabled>                
                                 <option>Low</option>
                                 <option>Medium</option>
                                 <option>High</option>
@@ -61,8 +69,12 @@ const IssuePage = () => {
 
                         <Form.Group>
                             <Form.Label> Reporter </Form.Label>
-                            <Form.Control value={item.reporter} disabled/>
+                            <Form.Control className="bg-dark text-white" value={item.reporter} disabled/>
                         </Form.Group>
+
+                        <hr/>
+
+                        <Button className="btn btn-danger" onClick={closeIssue}> Close Issue </Button>
                         </Form>
                     </div>
                 </div>
@@ -72,4 +84,4 @@ const IssuePage = () => {
     )
 }
 
-export default IssuePage;
+export default IssuePage;   
