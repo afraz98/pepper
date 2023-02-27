@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 
-import '../style/issuepage.css'
+import '../style/issuespage.css'
 
 const IssuesPage = () => {
   const { user } = useContext(AuthContext);
@@ -64,7 +64,7 @@ const IssuesPage = () => {
               (item) => (
                 <tr key={item.id}>
                   <th> {item.date} </th>
-                  <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <a className="text-white" href={`/issues/${item.id}`}>{item.title}</a> </th>
+                  <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <Link className="text-white" to={`/issues/${item.id}`}>{item.title}</Link> </th>
                   <th> {item.reporter} </th>
                   <th> {item.assignee} </th>
                 </tr>

@@ -1,0 +1,19 @@
+.navbar-brand {
+    color: white;
+    text-decoration: none;
+}
+
+
+.navbar-link:hover {
+    color: red;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    padding-right: 10%
+}
+
+.navbar-link:hover {
+    color: red;
+}

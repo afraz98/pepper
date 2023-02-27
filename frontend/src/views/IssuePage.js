@@ -39,16 +39,13 @@ const IssuePage = () => {
                     <div className="p-3">
                         <h3>Issue #{issueId}</h3>
                         <hr/>
-                        <Form>
-                        <Form.Group>
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control className="bg-dark text-white" value={item.title} disabled />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control className="bg-dark text-white" value={item.description} as="textarea" rows={5} disabled />
-                        </Form.Group>
 
+                        <h1> {item.title} </h1>
+                        <p> {item.description} </p>
+
+                        <hr/>
+
+                        <Form>
                         <Form.Group>
                             <Form.Label>Assignee</Form.Label>
                             <Form.Select className="bg-dark text-white" name="assignee" disabled>
@@ -73,8 +70,10 @@ const IssuePage = () => {
                         </Form.Group>
 
                         <hr/>
-
-                        <Button className="btn btn-danger" onClick={closeIssue}> Close Issue </Button>
+                        <div className="px-auto mx-auto">
+                            <Button className="btn btn-danger" onClick={closeIssue}> Close Issue </Button>
+                            <Button variant="outline-danger" onClick={closeIssue}> Comment </Button>
+                        </div>
                         </Form>
                     </div>
                 </div>

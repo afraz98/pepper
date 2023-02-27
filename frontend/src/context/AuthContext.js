@@ -7,14 +7,10 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null
+    localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null
   );
   const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
-      : null
+    localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null
   );
   const [loading, setLoading] = useState(true);
 

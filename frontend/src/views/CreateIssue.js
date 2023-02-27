@@ -3,10 +3,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
-import '../style/issuepage.css'
 import { useNavigate } from "react-router-dom";
 
 import '../style/createissue.css'
+import '../style/issuespage.css'
 
 const CreateIssue = () => {
     const { user } = useContext(AuthContext);
