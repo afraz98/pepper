@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
-from .models import Issue
-
+from .models import Issue, Comment
 
 class IssueSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,4 +30,15 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'password'
+        )
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = (
+            'issue',
+            'date',
+            'author',
+            'content',
         )
