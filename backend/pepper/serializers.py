@@ -3,7 +3,18 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from .models import Issue, Comment
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = (
+            'issue',
+            'date',
+            'author',
+            'content'
+        )
+
 class IssueSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(required=False, many=True)
     class Meta:
         model = Issue
         fields = (
@@ -15,6 +26,7 @@ class IssueSerializer(serializers.ModelSerializer):
             'priority',
             'reporter',
             'date',
+            'comments',
         )
 
 
@@ -30,15 +42,4 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'password'
-        )
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = (
-            'issue',
-            'date',
-            'author',
-            'content',
         )
