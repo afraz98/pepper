@@ -4,11 +4,14 @@ import AuthContext from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button"
+import Card from "react-bootstrap/Card"
 
 const IssuePage = () => {
     const { issueId } = useParams();
     const { user } = useContext(AuthContext);
-    useEffect(() => {refreshIssue()})
+    useEffect(() => {
+        refreshIssue()
+    });
 
     const[item, setItem] = useState({
         title: "",
@@ -17,18 +20,35 @@ const IssuePage = () => {
         assignee: "Unassigned",
         priority: "Low",
         reporter: user.username,
-        date: ""
+        date: "",
+        comments: []
     });
 
 
 
     const refreshIssue = () => {
         console.log(`http://localhost:8000/api/issues/${issueId}/`)
-        axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => setItem(res.data));
+        axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => setItem(res.data)).then(console.log(item));
     };
 
     const closeIssue = () => {
         // TODO: Change item.completed to true, navigate back to /issues
+    }
+
+    const renderComments = () => {
+        return (
+            <div>
+                {
+                    item.comments.map((comment) => 
+                        <Card bg='dark'>
+                            <Card.Header className="text-red">{comment.author}</Card.Header>
+                            <Card.Body>{comment.content}</Card.Body>
+                            <Card.Footer>{comment.date}</Card.Footer>
+                        </Card>
+                    )
+                }
+            </div>
+        )
     }
 
     return (
@@ -75,6 +95,14 @@ const IssuePage = () => {
                             <Button variant="outline-danger" onClick={closeIssue}> Comment </Button>
                         </div>
                         </Form>
+                        <hr/>
+                        <div>
+                        <ul className="list-group list-group-flush border-top-0">
+                            { 
+                                renderComments() 
+                            }
+                        </ul> 
+                        </div>
                     </div>
                 </div>
             </div>
