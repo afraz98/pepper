@@ -28,11 +28,16 @@ const IssuesPage = () => {
   };
 
   const displayCompleted = (status) => {
+    console.log("Displaying view completed ...")
+
     if (status) {
+      console.log("true")
       setViewCompleted(true);
+    } else {
+      console.log("false")
+      setViewCompleted(false);
     }
 
-    setViewCompleted(false);
   };
 
   const renderTabList = () => {
@@ -65,7 +70,7 @@ const IssuesPage = () => {
                   <th> {item.date} </th>
                   <th className={`issue-title mr-2 ${ viewCompleted ? "completed-issue" : ""}`} title={item.description}> <Link className="text-white" to={`/issues/${item.id}`}>{item.title}</Link> </th>
                   <th> {item.assignee} </th>
-                  <th> {item.report} </th>
+                  <th> {item.reporter} </th>
                 </tr>
               )
             )

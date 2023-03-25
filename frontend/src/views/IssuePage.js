@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 
 
@@ -10,6 +10,7 @@ const IssuePage = () => {
     const { user } = useContext(AuthContext);
     const [disabled, setDisabled] = useState(true);
     const [userList, setUserList] = useState([]);
+    let navigate = useNavigate();
 
     const refreshIssue = () => {
         console.log("Refreshing issue ...")
@@ -49,7 +50,11 @@ const IssuePage = () => {
     };
 
     const closeIssue = () => {
-        // TODO: Change item.completed to true, navigate back to /issues
+        console.log('Closing issue ...')
+        setItem({...item, 'completed': true})
+        console.log(item)
+        updateIssue();
+        navigate('/issues')    
     }
 
     const renderComments = () => {
