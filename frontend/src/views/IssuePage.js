@@ -9,7 +9,8 @@ const IssuePage = () => {
     const { issueId } = useParams();
     const { user } = useContext(AuthContext);
     const [disabled, setDisabled] = useState(true);
-      
+    const [userList, setUserList] = useState([]);
+
     const refreshIssue = () => {
         console.log("Refreshing issue ...")
         console.log(`http://localhost:8000/api/issues/${issueId}/`)
@@ -19,7 +20,12 @@ const IssuePage = () => {
     useEffect(() => {
         console.log("IssuePage :: useEffect")
         refreshIssue()
+        refreshUserList()
     }, []);
+
+    const refreshUserList = () => {
+        axios.get("http://localhost:8000/api/users/").then((res) => setUserList(res.data)).catch((err) => console.log(err));
+    };
 
     const[item, setItem] = useState({
         title: "",
@@ -68,6 +74,13 @@ const IssuePage = () => {
     const handleIssueEditButtonClick = () => {
         console.log("Making issue editable ...")
         setDisabled(false);
+    }
+
+    const renderAssignees = () => {
+        return (
+          userList.map((usr) =>
+            <option key={usr.id}>{ usr.username }</option>
+          ));   
     }
 
     const updateIssue = () => {
@@ -120,8 +133,10 @@ const IssuePage = () => {
                             <Form>
                             <Form.Group>
                                 <Form.Label>Assignee</Form.Label>
-                                <Form.Select className="bg-dark text-white" name="assignee" disabled={disabled}>
-                                    <option>{user.username}</option>
+                                <Form.Select className="bg-dark text-white" name="assignee" value={item.assignee} disabled={disabled}>
+                                    {
+                                        renderAssignees()
+                                    }
                                 </Form.Select>
                             </Form.Group>
 
@@ -138,7 +153,7 @@ const IssuePage = () => {
 
                             <Form.Group>
                                 <Form.Label> Reporter </Form.Label>
-                                <Form.Control className="bg-dark text-white" value={item.reporter} disabled={disabled}/>
+                                <Form.Control className="bg-dark text-white" value={item.reporter} disabled/>
                             </Form.Group>
 
                             <hr/>

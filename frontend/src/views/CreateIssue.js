@@ -26,9 +26,9 @@ const CreateIssue = () => {
     let navigate = useNavigate();
     
     // Update user list
-    useEffect(() => {refreshList()}, [])
+    useEffect(() => {refreshUserList()}, [])
 
-    const refreshList = () => {
+    const refreshUserList = () => {
         axios.get("http://localhost:8000/api/users/").then((res) => setUserList(res.data)).catch((err) => console.log(err));
     };
 
