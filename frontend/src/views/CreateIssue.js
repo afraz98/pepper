@@ -40,6 +40,7 @@ const CreateIssue = () => {
         }
 
         setItem({...item, [name]: value})
+        console.log(item)
     };
 
     const handleSubmit = () => {

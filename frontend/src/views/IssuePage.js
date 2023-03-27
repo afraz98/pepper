@@ -3,7 +3,9 @@ import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 
 const IssuePage = () => {
     const { issueId } = useParams();
@@ -90,6 +92,7 @@ const IssuePage = () => {
 
     const updateIssue = () => {
         console.log("Updating issue ...");
+        console.log(item)
         if (item.id) {
             axios.put(`http://localhost:8000/api/issues/${item.id}/`, item);
             return;
@@ -105,7 +108,7 @@ const IssuePage = () => {
                             <Container>
                                 <Row>
                                 <Col><h3>Issue #{issueId}</h3></Col> 
-                                <Col style={{display: 'flex', justifyContent: 'right'}}><Button onClick={handleIssueEditButtonClick}> Edit </Button></Col>
+                                <Col style={{display: 'flex', justifyContent: 'right'}}><Button onClick={handleIssueEditButtonClick}> <FontAwesomeIcon icon={faPencil}/> </Button></Col>
                                 </Row>
                             </Container>
                             <hr/>
@@ -138,7 +141,7 @@ const IssuePage = () => {
                             <Form>
                             <Form.Group>
                                 <Form.Label>Assignee</Form.Label>
-                                <Form.Select className="bg-dark text-white" name="assignee" value={item.assignee} disabled={disabled}>
+                                <Form.Select className="bg-dark text-white" name="assignee" value={item.assignee} disabled={disabled} onChange={(e)=>handleChange(e)}>
                                     {
                                         renderAssignees()
                                     }
@@ -147,7 +150,7 @@ const IssuePage = () => {
 
                             <Form.Group>
                                 <Form.Label>Priority</Form.Label>
-                                <Form.Select className="bg-dark text-white" name="priority" value={item.priority} disabled={disabled}>                
+                                <Form.Select className="bg-dark text-white" name="priority" value={item.priority} disabled={disabled} onChange={(e)=>handleChange(e)}>                
                                     <option>Low</option>
                                     <option>Medium</option>
                                     <option>High</option>
@@ -166,7 +169,7 @@ const IssuePage = () => {
                                 <Row>
                                     <Col><Button variant="outline-danger"> Comment </Button></Col>
                                     <Col><Button className="btn btn-danger" onClick={closeIssue}> Close Issue </Button></Col>
-                                    <Col><Button onClick={updateIssue}> Save </Button></Col>
+                                    <Col><Button onClick={updateIssue}> <FontAwesomeIcon icon={faFloppyDisk}/> </Button></Col>
                                 </Row>
                                 </Container>
                             </Form>

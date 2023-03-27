@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReact, faBootstrap, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { Navbar, Button, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import '../style/footer.css';
 
 const Footer = () => {

@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       navigate("/issues");
     } else {
         console.log(data)
-      alert("Error retrieving user data");
+      alert("Unable to login. Please double-check your credentials or try again later.");
     }
   };
   
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     if (response.status === 201) {
       navigate("/login");
     } else {
-      alert("Error registering new user");
+      alert("Unable to register users at the moment. Please try again later.");
     }
   };
 

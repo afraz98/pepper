@@ -5,6 +5,9 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    JSON Web Token (JWT) serializer
+    """
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -14,6 +17,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+    Registration serializer. 
+
+    Passwords are REQUIRED and password2 should match password (confirmation field)
+    """
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
