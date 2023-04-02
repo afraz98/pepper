@@ -11,6 +11,7 @@ import NavigationBar from './components/Navbar';
 import Register from './views/Register';
 import { AuthProvider } from './context/AuthContext';
 import Footer from './components/Footer.js';
+import ForgotPassword from './views/ForgotPassword.js';
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
                 <Route path='/issues/create' element={<PrivateRoute/>}>
                     <Route path='/issues/create' element={<CreateIssue/>}/>
                 </Route>
+
+                <Route path="/forgot-password" element={<ForgotPassword/>} />
             </Routes>
             <Footer />
             </AuthProvider>

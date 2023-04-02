@@ -2,10 +2,9 @@
 
 import React, { useContext } from "react";
 import AuthContext from '../context/AuthContext';
-import "../style/login.css";
 
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form } from "react-bootstrap";
+import "../style/login.css";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
@@ -28,16 +27,20 @@ const Login = () => {
                   <hr />
                   <Form.Group>
                   <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" id="username" placeholder="user.name" />
+                  <Form.Control className="bg-dark text-white" type="text" id="username" placeholder="user.name" />
                   </Form.Group>
 
                   <Form.Group>
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" id="password" placeholder="********" />
+                  <Form.Control className="bg-dark text-white" type="password" id="password" placeholder="********" />
                   </Form.Group>
                   
                   <hr/>
-                  <Button variant="danger" type="submit">Login</Button>
+                  <div className="d-flex justify-content-center">
+                    <Button className="mx-auto" variant="danger" type="submit">Login</Button>
+                  </div>
+                  <a href="/forgot-password"> Forgot password? </a>
+                  <p> Need an account? <a href="/register">Register here</a></p>
                 </Form>
               </section>
           </div>

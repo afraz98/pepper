@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
-    console.log(JSON.stringify({username, password}))
     
     const response = await fetch("http://localhost:8000/api/token/", {
       method: "POST",
@@ -37,14 +36,11 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/issues");
     } else {
-        console.log(data)
       alert("Unable to login. Please double-check your credentials or try again later.");
     }
   };
   
   const registerUser = async (username, password, password2) => {
-    console.log(JSON.stringify({username, password, password2}))
-    
     const response = await fetch("http://localhost:8000/api/register/", {
       method: "POST",
       headers: {

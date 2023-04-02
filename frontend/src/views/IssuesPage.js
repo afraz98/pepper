@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import Table from "react-bootstrap/Table";
+import { Table } from "react-bootstrap";
 import '../style/issuespage.css'
 
 const IssuesPage = () => {
