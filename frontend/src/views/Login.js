@@ -39,8 +39,8 @@ const Login = () => {
                   <div className="d-flex justify-content-center">
                     <Button className="mx-auto" variant="danger" type="submit">Login</Button>
                   </div>
-                  <a href="/forgot-password"> Forgot password? </a>
-                  <p> Need an account? <a href="/register">Register here</a></p>
+                  <a href="/forgot-password" className="text-white"> Forgot password? </a>
+                  <p> Need an account? <a href="/register" className="text-white">Register here</a></p>
                 </Form>
               </section>
           </div>

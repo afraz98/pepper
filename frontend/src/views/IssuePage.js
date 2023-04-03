@@ -6,23 +6,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 
 const IssuePage = () => {
     const { issueId } = useParams();
     const { user } = useContext(AuthContext);
     const [disabled, setDisabled] = useState(true);
     const [userList, setUserList] = useState([]);
+    const [comments, setComments] = useState([]);
+
     let navigate = useNavigate();
 
     const refreshIssue = () => {
-        console.log("Refreshing issue ...")
         console.log(`http://localhost:8000/api/issues/${issueId}/`)
-        axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => setItem(res.data)).then(console.log(item));
+        axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => { 
+            setItem(res.data);
+            setComments(item.comments)
+        }).then(console.log(item));
     };
 
     useEffect(() => {
-        console.log("IssuePage :: useEffect")
         refreshIssue()
         refreshUserList()
     }, []);
@@ -52,12 +54,22 @@ const IssuePage = () => {
         setItem({...item, [name]: value})
     };
 
-    const closeIssue = () => {
+    const handleIssueEditButtonClick = () => {
+        setDisabled(false);
+    }
+
+    const handleCloseIssue = () => {
         console.log('Closing issue ...')
         setItem({...item, 'completed': true})
         console.log(item)
         updateIssue();
         navigate('/issues')    
+    }
+
+    const handleNewCommentSubmission = () => {
+        // TODO: Implement comment creation frontend 
+        // (1) Make comment creation form visible on button click
+        // (2) Add button to save new comments
     }
 
     const renderComments = () => {
@@ -79,11 +91,6 @@ const IssuePage = () => {
         )
     }
 
-    const handleIssueEditButtonClick = () => {
-        console.log("Making issue editable ...")
-        setDisabled(false);
-    }
-
     const renderAssignees = () => {
         return (
           userList.map((usr) =>
@@ -92,7 +99,6 @@ const IssuePage = () => {
     }
 
     const updateIssue = () => {
-        console.log("Updating issue ...");
         console.log(item)
         if (item.id) {
             axios.put(`http://localhost:8000/api/issues/${item.id}/`, item);
@@ -168,13 +174,25 @@ const IssuePage = () => {
                             <hr/>
                                 <Container>
                                 <Row>
-                                    <Col><Button variant="outline-danger"> Comment </Button></Col>
-                                    <Col><Button className="btn btn-danger" onClick={closeIssue}> Close Issue </Button></Col>
-                                    <Col><Button onClick={updateIssue}> <FontAwesomeIcon icon={faFloppyDisk}/> </Button></Col>
+                                    <Col><Button className="btn btn-danger" onClick={handleCloseIssue}> Close Issue </Button></Col>
+                                    <Col><Button onClick={updateIssue}> Save </Button></Col>
                                 </Row>
                                 </Container>
                             </Form>
                             <hr/>
+                            
+                            <Form>
+                                <Form.Control 
+                                    name="description"
+                                    as="textarea" rows={5}
+                                    className="bg-dark text-white"
+                                />
+
+                                <hr/>
+
+                                <Button onClick={handleNewCommentSubmission}> Save </Button>
+                            </Form>
+
                             <div>
                             <ul className="list-group list-group-flush border-top-0">
                                 { 

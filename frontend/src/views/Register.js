@@ -28,7 +28,8 @@ const Register = () => {
                           <Form.Control 
                           type="text" 
                           id="username-entry" 
-                          name="username" 
+                          name="username"
+                          className="bg-dark text-white"
                           placeholder="user.name"
                           onChange={e => setUsername(e.target.value)}
                           />
@@ -40,6 +41,7 @@ const Register = () => {
                           type="password" 
                           id="password-entry"
                           name="password"
+                          className="bg-dark text-white"
                           placeholder="******" 
                           onChange={e => setPassword(e.target.value)}
                         />
@@ -52,13 +54,17 @@ const Register = () => {
                           type="password" 
                           id="repeat-password-entry"
                           name="repeat-password"
+                          className="bg-dark text-white"
                           placeholder="******" 
                           invalid = { password !== password2 }
                           onChange={e => setPassword2(e.target.value)}
                           />
                       </Form.Group>
                       <hr/>
-                      <Button variant="danger" type="submit"> Register </Button>
+
+                      <div className="d-flex justify-content-center">
+                        <Button variant="danger" type="submit"> Register </Button>
+                      </div>
                   </Form>
               </div>
             </div>
