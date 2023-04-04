@@ -7,12 +7,15 @@ import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
+import CommentForm from "../components/CommentForm";
+import { ListGroup } from "react-bootstrap";
+
 const IssuePage = () => {
     const { issueId } = useParams();
     const { user } = useContext(AuthContext);
     const [disabled, setDisabled] = useState(true);
     const [userList, setUserList] = useState([]);
-    const [comments, setComments] = useState([]);
+    const date = new Date();
 
     let navigate = useNavigate();
 
@@ -20,7 +23,6 @@ const IssuePage = () => {
         console.log(`http://localhost:8000/api/issues/${issueId}/`)
         axios.get(`http://localhost:8000/api/issues/${issueId}/`).then((res) => { 
             setItem(res.data);
-            setComments(item.comments)
         }).then(console.log(item));
     };
 
@@ -59,33 +61,30 @@ const IssuePage = () => {
     }
 
     const handleCloseIssue = () => {
-        console.log('Closing issue ...')
         setItem({...item, 'completed': true})
-        console.log(item)
         updateIssue();
         navigate('/issues')    
     }
 
-    const handleNewCommentSubmission = () => {
-        // TODO: Implement comment creation frontend 
-        // (1) Make comment creation form visible on button click
-        // (2) Add button to save new comments
+    const handleNewCommentSubmission = (comment) => {
+        const timestamp = date.toISOString().slice(0, 10)
+        console.log(user.username, comment, timestamp)
+        // TODO: Post new comment to comment table
     }
 
     const renderComments = () => {
         return (
             <div>
                 {
-                    item.comments.map((comment) => 
-                        <>
-                            <Card className="bg-dark">
-                                <Card.Header>{comment.author}</Card.Header>
-                                <Card.Body>{comment.content}</Card.Body>
-                                <Card.Footer className="">{comment.date}</Card.Footer>
-                            </Card>
-                            <hr/>
-                        </>
-                    )
+                    item.comments.map((comment, index) => (
+                        <ListGroup.Item className="bg-dark" key={index}>
+                        <Card className="bg-dark text-white">
+                            <Card.Header>{comment.author}</Card.Header>
+                            <Card.Body>{comment.content}</Card.Body>
+                            <Card.Footer className="text-muted">{comment.date}</Card.Footer>
+                        </Card>
+                        </ListGroup.Item>
+                    ))
                 }
             </div>
         )
@@ -125,7 +124,7 @@ const IssuePage = () => {
                                 <Form.Control 
                                     name="title"
                                     value = { item.title }
-                                    className="bg-dark text-white"
+                                    className="bg-dark text-white my-2"
                                     onChange = { e => handleChange(e) }
                                     disabled={disabled}
                                 />
@@ -148,7 +147,7 @@ const IssuePage = () => {
                             <Form>
                             <Form.Group>
                                 <Form.Label>Assignee</Form.Label>
-                                <Form.Select className="bg-dark text-white" name="assignee" value={item.assignee} disabled={disabled} onChange={(e)=>handleChange(e)}>
+                                <Form.Select className="bg-dark text-white mb-2" name="assignee" value={item.assignee} disabled={disabled} onChange={(e)=>handleChange(e)}>
                                     {
                                         renderAssignees()
                                     }
@@ -157,7 +156,7 @@ const IssuePage = () => {
 
                             <Form.Group>
                                 <Form.Label>Priority</Form.Label>
-                                <Form.Select className="bg-dark text-white" name="priority" value={item.priority} disabled={disabled} onChange={(e)=>handleChange(e)}>                
+                                <Form.Select className="bg-dark text-white mb-2" name="priority" value={item.priority} disabled={disabled} onChange={(e)=>handleChange(e)}>                
                                     <option>Low</option>
                                     <option>Medium</option>
                                     <option>High</option>
@@ -180,26 +179,16 @@ const IssuePage = () => {
                                 </Container>
                             </Form>
                             <hr/>
+
+                            <Container>
+                            <CommentForm onSubmit={handleNewCommentSubmission} />
                             
-                            <Form>
-                                <Form.Control 
-                                    name="description"
-                                    as="textarea" rows={5}
-                                    className="bg-dark text-white"
-                                />
-
-                                <hr/>
-
-                                <Button onClick={handleNewCommentSubmission}> Save </Button>
-                            </Form>
-
-                            <div>
-                            <ul className="list-group list-group-flush border-top-0">
-                                { 
-                                    renderComments() 
+                            <ListGroup className="bg-dark">
+                                {
+                                    renderComments()
                                 }
-                            </ul> 
-                        </div>
+                            </ListGroup>
+                            </Container>
                     </div>
                 </div>
             </div>

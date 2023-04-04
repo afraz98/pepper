@@ -1,8 +1,12 @@
+.nav-bar {
+    color: #6F2232;
+    justify-content: center;
+}
+
 .navbar-brand {
     color: white;
     text-decoration: none;
 }
-
 
 .navbar-link:hover {
     color: red;

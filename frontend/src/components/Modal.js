@@ -1,9 +1,6 @@
 import React, { useState, useContext } from "react";
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import { Button, Modal, Form } from 'react-bootstrap'
 import AuthContext from "../context/AuthContext";
-import Form from "react-bootstrap/Form";
-
 import "../style/modal.css"
 
 const CustomModal = (props) => {
